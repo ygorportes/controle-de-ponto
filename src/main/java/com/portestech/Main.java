@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        List<TimeEntry> records = new ArrayList<>();
+        List<TimeEntry> records = TimeEntryRepository.loadEntries();
 
         while (true) {
             System.out.println("\n== SISTEMA DE CONTROLE DE PONTO ==");
@@ -28,6 +28,7 @@ public class Main {
                     System.out.println("Nome do funcionário: ");
                     String employeeName = scanner.nextLine();
                     records.add(new TimeEntry(employeeName));
+                    TimeEntryRepository.saveEntries(records);
                     System.out.println("Entrada registrada com sucesso!");
                     break;
                 case 2:
@@ -42,7 +43,9 @@ public class Main {
                             break;
                         }
                     }
-                    if (!found) {
+                    if (found) {
+                        TimeEntryRepository.saveEntries(records);
+                    } else {
                         System.out.println("Funcionário não encontrado ou saída já registrada.");
                     }
                     break;
