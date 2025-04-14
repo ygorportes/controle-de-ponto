@@ -14,12 +14,15 @@ public class TimeEntry {
         this.entryTime = LocalDateTime.now();
     }
 
-    public void exitTime() {
+    public void registerExit() {
         this.exitTime = LocalDateTime.now();
     }
 
     public long calculateWorkedHours() {
-        return Duration.between(entryTime, exitTime).toHours();
+        if (entryTime != null && exitTime != null) {
+            return Duration.between(entryTime, exitTime).toHours();
+        }
+        return 0;
     }
 
     public String getEmployeeName() {
